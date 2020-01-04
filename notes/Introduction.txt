@@ -1,0 +1,52 @@
+/***************
+What Belongs in Your Strater KIt
+***************/
+Package Mgt
+Bundling
+Minification
+Sourcemaps
+Transpiling
+Dynamic HTML Generation
+Centralized HTTP
+MOCK API framework
+Component Libraries
+Development Server
+Linting
+Automated testing
+Contonous Integration
+Automated Build
+Automated Deployment
+Working Example App
+
+/***************
+Agenda
+***************/
+
+3 steps for each section
+
+1 Options
+2 Recommendation
+3 Implementation
+
+Editors and Configuration
+Package Management
+Development Server 
+Automation
+Transpiling 
+Bundling 
+Linting 
+Testing and Continous Integration
+HTTP Calls
+Project Structure
+Production Build 
+Production Deploy 
+
+
+/***************
+Why Starter KIt
+***************/
+Reduce decision fatigue
+Right thing becomes automatic 
+Codifies lessons learned 
+Rapid feedback 
+Automated Checklist
