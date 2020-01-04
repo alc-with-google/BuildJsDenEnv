@@ -1,0 +1,99 @@
+/***************
+Agenda
+***************/
+Review Development Webserver options
+Configure a Development Webserver
+Services for sharing your work
+
+/***************
+Review Development Webserver options
+***************/
+- http-server ()
+- live-server
+- Express (comprehensive, not just for static files, run everywhere,production grades)
+- KOA (alternative to express)
+- hapi (alternative to express)
+
+- budo
+
+Webpack Dev server (built in to webpack, serves from memory,incudes hot reloadings)
+
+Browsersync (dedicated ip for sgaring work on LAN, all interactions remain in sync, great for cross device testing, integrates with webpack, browserify, gulp)
+
+/***************
+DEMO: Development Webserver - Express
+***************/
+
+/*** the initial npm install already installed Express ***/
+
+/*** create buildScripts/srcServer.js ***/
+var express =require('express');
+var path =require('path');
+var open =require('open');
+
+const port = 3000;
+const app = express();
+
+app.get ('/', function (req, res){
+    res.sendFile(path.join(__dirname, '../src/index.html'));
+});
+
+app.listen(port, function(err){
+    if (err){
+        console.log(err);
+    } else {
+        open('http://localhost:' + port)
+    }
+});
+
+
+/*** create src/index.html ***/
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+    </head>
+    <body>
+        <h1>Users</h1>
+        <table>
+            <thead>
+              <th>&nbsp</th>
+              <th>Id</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </thead>
+            <tbody id ='users'>
+            </tbody>
+        </table>
+
+    </body>
+</html>
+
+//run
+>node buildScripts/srcServer.js
+
+/***************
+Sharing Your Work in Progress
+***************/
+-localtunnel: easily share work on your local machine
+(set up: npm install localtunnel -g; start your app; run 'lt --port 3000')
+
+- ngrok: Secure tunnel to your local machine
+(set up: sign up; install ngrok;install authtoken, start app, then run ./ngrok http 80)
+(security)
+
+- now: quickly deploy node.js to the cloud
+(set up: npm install -g now; create a start script; run now)
+
+- Surge: Quickly host static files to public url
+(set up:npm install -g surge; surge)
+
+/***************
+Recommendation: DEMO- localtunnel
+***************/
+> npm install localtunnel -g
+> lt --port 3000 //returns a generic url
+> lt --port 3000 --subdomain cory //retunrs a url http://cory.localtunnel.me
+
