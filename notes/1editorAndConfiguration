@@ -1,0 +1,48 @@
+/***************
+Editors and Configuration
+***************/
+Strong ES2015+ support
+-autocomplete
+-ES6 imports
+-report unsed import
+-automated refactoring 
+
+Frameowrk Intelligence
+
+Built-In terminal 
+
+/***************
+Examples
+***************/
+
+Frontend
+-Atom 
+-Brackets 
+-Visual Code
+-Webs storm
+
+Backend
+-Eclipse
+-Visual Studio
+-Net beans
+
+/***************
+DEMO: Configuration
+***************/
+root = true
+
+[*]
+indent_style = space
+indent-size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+/*** then install the necessary plugin ***/
+
+
+
