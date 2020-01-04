@@ -1,0 +1,72 @@
+/***************
+Agenda
+***************/
+Review Options
+npm scripts
+
+/***************
+Review Options
+***************/
+- Grunt
+(The “original”
+Configuration over code
+Writes intermediary files between steps
+Large plugin ecosystem)
+
+- Gulp
+(In-memory streams called pipes
+Fast
+Code over configuration i.e. actual js code
+Large plugin ecosystem)
+
+- npm
+(Declared in
+package.json
+Leverage your OS’ command line
+Directly use
+npmpackages
+Call separate Node scripts
+Convention
+-based pre/post hooks
+Leverage world’s)
+
+/******** Why npm? ********/
+Use tools directly
+No need for separate plugins
+Simpler debugging
+Better docs
+Easy to learn
+Simple
+
+
+/***************
+DEMO
+***************/
+
+"scripts": {
+    "start": "node buildScripts/srcServer.js"
+}
+
+> node buildScripts/srcServer.js
+> npm start
+
+/***** start message when development server is on; put in scripts *****/
+// in buildScripts/startMessage.js
+
+var chalk = require('chalk');
+
+console.log(chalk.green('Starting the app in Dev Mode...'))
+
+"scripts": {
+    "prestart": "node buildScripts/startMessage.js",
+    "start": "node buildScripts/srcServer.js"
+}
+
+/***** more in scripts *****/
+"scripts": {
+    "prestart": "node buildScripts/startMessage.js",
+    "start": "npm-run-all --parallel open:src",
+    "open:src": "node buildScripts/srcServer.js",
+    "localtunnel": "lt --port 3000",
+    "share": "npm-run-all --parallel open:src localtunnel",
+}
