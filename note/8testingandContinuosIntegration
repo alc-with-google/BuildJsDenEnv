@@ -208,6 +208,10 @@ Go the website and do the necessaru set up
 -2-
 Back to your folder, create .travis.yml
 
+language: node_js  //Lnaguage to use
+node_js:            //version
+  - "6"
+
 
 
 
