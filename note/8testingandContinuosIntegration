@@ -1,0 +1,213 @@
+/***************
+Agenda
+***************/
+{
+        JavaScript testing styles
+    6 key testing decisions
+    Configure testing and write test
+    Continuous integration
+}
+
+/***************
+JavaScript testing styles
+***************/
+{
+    Unit: Focus is Singlefunction or module in automated way
+    Integration: Focus is Interactions between modules
+    UI: Automate interactions with UI - keystrokes and stuffs
+}
+/***************
+6 key testing decisions
+***************/
+{
+    -Testing Frameworks
+    Tape
+    AVA
+    Mocha
+    Jasmine
+    QUnit
+    Jest
+    (It’s Like Choosing a Gym)
+
+    -Assertion Library
+    What’s An Assertion? Declare what you expect
+    expect(2+2).to.equal(4)
+    assert(2+2).equals(4)
+
+    chai, should, expect
+
+    -3-
+    Helper Library
+    JSDOM:
+    Simulate the browser’s DOM
+    Run DOM-related tests without a browser
+    Cheerio:
+    jQuery for the server
+    Query virtual DOM using jQuery selectors
+
+    -4-
+    Where to Run Tests?
+
+    Browser
+    -Karma, Testem
+
+    Headless Browser
+    -PhantomJS
+
+    In-memory DOM
+    -JSDOM
+
+    -5-
+    Where do test files belong?
+
+    Centralized
+    Less “noise” in srcfolder
+    Deployment confusion
+    Inertia
+
+    // file.test.js
+    import file from '../../src/long/path'
+
+    Alongside (Recommended esp for js project)
+    Easy imports
+    Clear visibility
+    Convenient to open (since they are alongside)
+    No recreating folder structure (ie no recreating same name in different folders)
+    Easy file moves (no change of paths)
+
+    -Path to file under test is always ./filename
+    // file.test.js
+    import file from './file'
+
+    /****Naming Test Files******/
+    fileName.spec.js
+
+    -6-
+    When should tests run?
+
+    Unit Tests Should Run When You Hit Save
+    Rapid feedback
+    Facilitates TDD
+    Automatic = Low friction
+    Increases test visibility
+
+    Unit Tests
+    Test a small unit
+    Often single function
+    Fast
+    Run upon save
+
+    Integration Tests
+    Test multiple units
+    Often involves clicking and waiting
+    Slow
+    Often run on demand, or in QA
+}
+
+/***************
+DEMO: Configure automated testing
+***************/
+
+/***Plan***/
+{
+   1. Framework: Mocha
+   2. Assertion Library: Chai
+   3. Helper LIbraries: JSDOM
+   4. Where to run tests: Node
+   5. Where to place test: Alongside
+   6. When to run tests: Upon save
+}
+
+/*** create buildscripts/testSetup.js ***/
+{
+    //This file isn't transpiled, so must use commonjs and es5
+
+    //Register babel to tanspile our test before mocha run our test run.
+    require('babel-register')();
+
+    //Disable webpack features that Mocha dosent understand
+    //since we already imported the .css file into index.js
+    require.extensions['.css'] = function() {};
+}
+
+/***script to run text in package.json***/
+{
+    "test": "mocha --reporter progress buildScripts/testSetup.js \"src/**/*.test.js\""
+
+    mocha is the executable
+    --reporter progress -use the 'progress reporter' format. there are others.
+    next run the script buildScripts/testSetup.js
+    then run \"src/**/*.test.js\"" (any file that ends test.js in src folder)
+}
+
+/*** create sample test: src/index.test.js ***/
+
+{
+    import {expect} from 'chai';
+    import jsdom from 'jsdom';
+    import fs from 'fs'; //fs stands for file system, it's from node
+
+    describe ('Our first test',() => {
+        it('should pass',() => {
+            expect(true).to.equal(true); //false or true to see fail and pass
+        });
+    });
+
+    describe('index.html',() => {
+        it('should say Users',(done) => {
+            const index = fs.readFileSync('./src/index.html', 'utf-8');
+
+            //when running a asynchronous stuffs, done is passed to the it function
+            jsdom.env(index,function(err, window){ // enters the js (virtua) environment
+                const h1 = window.document.getElementsByTagName('h1')[0];
+                expect(h1.innerHTML).to.equal('Users');
+
+                // called here so mocha can spit out the result
+                done();
+                window.close()
+            });
+        });
+    });
+}
+
+/*** let's run test anytime we hit the save button ***/
+"test:watch": "npm run test -- --watch"
+
+we can also add it to the start script.
+
+/***************
+CI
+***************/
+ Why CI?
+{
+    Forgot to commit new file
+    Forgot to update
+    package.json
+    Commit doesn’t run cross-platform
+    Node version conflicts
+    Bad merge
+    Didn’t run tests
+    Catch mistakes quickly
+}
+
+What Does a CI Server Do?
+{
+    Run Automated build
+    Run your tests
+    Check code coverage
+    Automate deployment
+}
+
+/***************
+DEMO: Set Up CI.
+***************/
+travisci.
+
+-1-
+Go the website and do the necessaru set up
+-2-
+Back to your folder, create .travis.yml
+
+
+
+
