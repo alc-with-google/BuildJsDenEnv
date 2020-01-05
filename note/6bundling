@@ -1,0 +1,223 @@
+/***************
+Why Bundling?
+***************/
+CommonJS doesn’t work in web browsers
+Package project into file(s) - so client can download just what they want
+Improve Node performance
+
+/***************
+Agenda
+***************/
+Module formats
+Bundlers
+Implement ES6 modules and bundling
+
+/***************
+Select a Module Format
+***************/
+- IIFE (old Format)
+
+- Asynchronous Module Definition(AMD) (old Format)
+
+- CommonJS(CJS)
+
+- ES6 Modules (New and Modern)
+
+/***************
+Why ES6 Modules
+***************/
+Standardized
+Statically analyzable
+- Improved autocomplete
+- Intelligent refactoring
+- Fails fast
+- Tree shaking
+Easy to read
+- Named imports
+- Default exports
+
+
+/***************
+Bundlers
+***************/
+- Browserify
+The first bundler to reach mass adoption
+Bundle npm packages for the web
+Large plugin ecosystem
+
+- Webpack
+Bundles more than just JS
+Import CSS, images,
+etclike JS
+Built in hot
+-reloading web server
+
+- Rollup
+Tree shaking
+Faster loading production code
+Quite new
+Great for library authors
+No hot reloading and code splitting
+
+- JSPM
+Uses
+SystemJS, a universal module loader
+Can load modules at runtime
+Has its own package manager
+Can install from npm, git
+Uses Rollup
+
+/***************
+Why Webpack?
+***************/
+Much more than just JS
+- CSS
+- Images
+- Fonts
+- HTML
+Bundle splitting
+Hot module reloading
+Webpack 2 offers tree shaking
+
+/***************
+DEMO: Set Up Webpack
+***************/
+Webpack bundle all assets into one file for the target
+Webpack can create multiple bundles
+
+//iniatial configuration in webpack.config.dev.js at the root folder
+
+import path from 'path';
+
+export default {
+  debug: true, //let's us see some debugging as we run our build
+  devtool: 'inline-source-map', //options varies from speed vs quality
+  noInfo: false, //we don't to see all the files being bundled
+  entry: [
+    path.resolve(__dirname, 'src/index') //a good place to place to place middleware for hot-reloading and other stuffs
+  ],
+  target: 'web', //other options include electron or node
+  output: { //webpack wont actually generate any physical files for our development build. It will seve our build from memory
+    path: path.resolve(__dirname, 'src'),
+    publicPath: '/',
+    filename: 'bundle.js'
+  },
+  plugins: [],
+  module: { //files types we want to handle, also I can import .css files in js files and webpack will bundle them for me.
+    loaders: [
+      {test: /\.js$/, exclude: /node_modules/, loaders: ['babel']},
+      {test: /\.css$/, loaders: ['style','css']}
+    ]
+  }
+};
+
+/***************
+DEMO: Set Up Development Server to serve our webpack
+***************/
+//NOTE THE ADDITIONS in the buildScripts/srcServer.js
+
+import express from 'express';
+import path from 'path';
+import open from 'open';
+import webpack from 'webpack';
+import config from '../webpack.config.dev';
+
+/*eslint-disable no-console */
+
+const port = 3000;
+const app = express();
+const compiler = webpack(config); //pass the config to webpack
+
+// tell express other suff to use.
+// like the webpack-dev-middleware, pass it the compiler with options to use.
+app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+}));
+
+app.get ('/', function (req, res){
+    res.sendFile(path.join(__dirname, '../src/index.html'));
+});
+
+app.listen(port, function(err){
+    if (err){
+        console.log(err);
+    } else {
+        open('http://localhost:' + port)
+    }
+});
+
+app.get('/users', function (req, res){
+    res.json([
+      {"id": 1, "firstName": "Matthew", "lastName":"oye", "email": "ml@gmail.com"},
+      {"id": 2, "firstName": "Cornel", "lastName":"okon", "email": "co@gmail.com"},
+      {"id": 3, "firstName": "Osita", "lastName":"Irene", "email": "oi@gmail.com"}
+    ]);
+  });
+
+/***************
+DEMO: Set Up Entry Point index.js
+***************/
+
+//create src/index.js for testing.
+import numeral from 'numeral';
+
+const courseValue = numeral(1000).format('$0,0.00');
+console.log(`I wouldpay ${courseValue} for this waesome course`)
+
+
+//In the body tag, make a reference in src/index.html.
+
+<script src="bundle.js"></script>
+
+/***************
+DEMO: Set Up CSS files to be loaded as well
+***************/
+//create src/index.css for testing.
+body {
+    font-family: sans-serif;
+}
+table th{
+    padding: 20px;
+}
+
+//import 'index.css' into src/index.js
+
+import './index.css';
+
+/*********
+So webpack using the index.js as the entry point,
+bundles the css file along with js file and serve it at src/bundle.js virtually
+which is then referenced in the body tag in index.html
+
+Note: the index.css file is not placed normally on  the index.html file.
+
+Open developer tools, under network, see the response for the bundle.js file.
+*********/
+
+
+/***************
+SOURCEMAPS: How to debug transpiled and bundled code
+***************/
+Maps code back to original source
+Part of our build
+Downloaded if you open developer tools (only when you need it.)
+
+/***************
+DEMO: SOURCEMAPS: How to debug transpiled and bundled code
+***************/
+
+//there are other options, here we suer inline-source.
+
+//in index.js, it is to type 'debugger' at the required point
+
+import './index.css';
+
+import numeral from 'numeral';
+
+const courseValue = numeral(1000).format('$0,0.00');
+debugger;
+console.log(`I wouldpay ${courseValue} for this waesome course`)
+
+/********
+In dev tools, under sources, when refreshed, the scripts pauses when it sees the debugger.
