@@ -1,0 +1,149 @@
+/***************
+AGENDA:
+***************/
+Why Lint?
+Linting Tools
+Configuration approached for ESlint
+Set up ESlint
+
+
+/***************
+Why Lint?
+***************/
+Enforce Consistency. Avoid Mistakes
+
+- Enforce Consistency
+Curly brace position
+confirm / alert
+Trailing commas
+Globals
+eval
+
+- Avoid Mistakes
+Extra parenthesis
+Overwriting function
+Assignment in conditional
+Missing default case in switch
+debugger / console.log
+
+/***************
+Linting Tools
+***************/
+-JSLint
+-JSHint
+-ESlint
+
+/***************
+Configuration approached for ESlint
+***************/
+Decision #1: Configuration Location
+-Dedicated configfile
+Not tied to npm
+
+-package.json
+One less file
+
+Decision #2: Which rules?
+
+Decision #3: Warnings vs Errors
+- Warning
+Can continue development
+Can be ignored
+Team must agree: Fix warnings
+
+- Error
+Breaks the build
+Cannot be ignored
+Team is forced to comply
+
+Decision #4: Which plugins?
+This could be framework specific like react, angular and all
+...to enfoce framework specific Consistency
+
+
+Decision #5:Use a preset?
+
+/*****************************************
+Issue: ESLintdoesn’t watch files.
+We can use packages that hels with this Issue
+*****************************************/
+option 1: eslint-loader
+Re-lintsall files upon save.
+
+option 2: eslint-watch
+ESLintwrapper that adds file watch
+Not tied to webpack
+Better warning/error formatting
+Displays clean message
+Easily lint tests and build
+
+/*****************************************
+Issue: ESLintdoesn’t support many experimental JavaScript features
+Solution: Either run it directly, or through babel
+*****************************************/
+Run ESLintdirectly
+Supports ES6 and ES7 natively
+Also supports object spread
+
+Babel-eslint as a plugin in babel
+Also lints stage 0 -4 features
+
+/*****************************************
+Why Lint via an Automated Build Process?
+*****************************************/
+1. One place to check
+2. Universal configuration
+3. Part of continuous integration
+
+/*****************************************
+DEMO: Set Up ESlint.
+*****************************************/
+Set up ESLint
+- ESLint Recommended
+- eslint-watch
+
+//config file
+{
+    "root": true, //by default eslint will look at all config files and folders, just incase of other eslint, this is the root
+    "extends": [
+      "eslint:recommended", //using recommeded, not anb rules
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module"
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "mocha": true
+    },
+    "rules": {
+        "no-console": 1 //overrulling rules, 0-off, 1 - warning, 2 - error
+    },
+  }
+
+//we can run directkly, but this dosent allows to watch files
+//so we use a handy npm package eslint-watch
+
+"lint": "esw webpack.config.* src buildScripts --color"
+
+esw is the executable for eslint watch
+then we pass it the list of files for it to watch.
+the color flag adds color to the console output
+
+/*eslint-disable no-console */
+this disables the no-console rule in a file
+
+// eslint-disable-line no-console
+this disables the no-console rule in a line
+
+//to make it watch files, we create another script
+"lint:watch": "npm run lint -- --watch"
+
+we run lint and pass in the watch flag.
+
+//to make it run at start,
+we pass the 'lint:watch' to the start script
+
