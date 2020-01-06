@@ -1,1 +1,10 @@
-{"users":[{"id":2824969,"firstName":"Rose","lastName":"Graham","email":"Meredith60@hotmail.com"},{"id":82102507,"firstName":"Dahlia","lastName":"Nader","email":"Madilyn_Williamson@gmail.com"},{"id":71853488,"firstName":"Sasha","lastName":"McGlynn","email":"Kendra55@hotmail.com"},{"id":44636590,"firstName":"Alexa","lastName":"Koepp","email":"Eladio67@gmail.com"},{"id":99871708,"firstName":"Hanna","lastName":"Ratke","email":"Mckayla48@gmail.com"}]}
+{
+  "users": [
+    {
+      "id": 99871708,
+      "firstName": "Hanna",
+      "lastName": "Ratke",
+      "email": "Mckayla48@gmail.com"
+    }
+  ]
+}

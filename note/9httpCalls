@@ -274,6 +274,7 @@ We use scripts...
 //add start-mockapi to start script so that it starts new data each time it starts
 
 // point the app to the mock apiin development, otherwise t points to the real api in production
+
 create src/api/baseUrl.js
 
 export default function getBaseUrl (){
@@ -281,7 +282,8 @@ export default function getBaseUrl (){
     return inDevelopment ? 'http://localhost:3001/' : '/'; //let's assume '/' is the real api, it might be https://shrouded-refuge-41310.herokuapp.com
   }
 
-  //adjust the fetch api in UserApi.js
+//adjust the fetch api in UserApi.js
+
 {
     import "whatwg-fetch";
     import getBaseUrl from "./baseUrl/";
@@ -305,7 +307,63 @@ export default function getBaseUrl (){
     }
 }
 
+/**********
+DEMO: Manipulating Data Via JSON Server.
+*********/
+//Allow manipulation on the api; editing the userApi.js file.
+{
+    import "whatwg-fetch";
+    import getBaseUrl from './baseUrl';
 
+    const baseUrl = getBaseUrl ();
+
+    export function getUsers (){
+    return get('users');
+    }
+
+    // making the delete function avalable via node
+    export function deleteUser(id){
+        return del(`users/${id}`);
+    }
+
+    function get(url){
+        return fetch(baseUrl + url).then(onSuccess, onError);
+    }
+
+    // the delete function itself
+    function del (url) {
+        const request = new Request(baseUrl + url, {
+        method: "DELETE"
+        });
+        return fetch(request).then(onSuccess, onError);
+    }
+
+    function onSuccess(response){
+    return response.json();
+    }
+
+    function onError(error){
+    console.log(error); //eslint-disable-line no-console
+    }
+}
+
+// now focus to the UI, index.js to make it work
+// add these code to the getUsers function
+// add the deleteUsers as an import as well
+
+const deleteLinks = global.document.getElementsByClassName ('deleteUser');
+
+//must use array.from to create a real array from a DOM collection
+//getElementsByClassname only returns an 'array like' object
+Array.from (deleteLinks, link => {
+    link.onclick = function (event){
+        const element = event.target;
+        event.preventDefault();
+        deleteUser (element.attributes["data-id"].value);
+        const row = element.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    };
+});
 
 
 
