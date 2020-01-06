@@ -8,17 +8,38 @@ Services for sharing your work
 /***************
 Review Development Webserver options
 ***************/
-- http-server ()
+
+- http-server ():
+Ultra-simple
+Single command serves current directory
+
 - live-server
-- Express (comprehensive, not just for static files, run everywhere,production grades)
+Lightweight
+Support live-reloading
+
+- Express
+Highly Configurable
+Production grade
+Can run it everywhere
+
 - KOA (alternative to express)
+
 - hapi (alternative to express)
 
 - budo
+Integrates with Browserify
+Includes hot reloading
 
-Webpack Dev server (built in to webpack, serves from memory,incudes hot reloadings)
+- Webpack Dev server
+Built in to Webpack
+Serves from memory
+Includes hot reloading
 
-Browsersync (dedicated ip for sgaring work on LAN, all interactions remain in sync, great for cross device testing, integrates with webpack, browserify, gulp)
+- Browsersync
+Dedicated IP for sharing work on LAN
+All interactions remain in sync!
+Great for cross-device testing
+Integrates with Webpack, Browserify, Gulp
 
 /***************
 DEMO: Development Webserver - Express
