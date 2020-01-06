@@ -262,6 +262,49 @@ Mock HTTP
 //let's create a script to easily run this
 "generate-mock-data": "babel-node buildScripts/generateMockData"
 
+/**********
+DEMO: Serving Mock Data via JSON Server.
+*********/
+We use scripts...
+
+//start the json server, let it watch, serve this json file, via port 3001
+"prestart-mockapi": "json-server --watch src/api/db.json --port 3001" //so new data is generated each time start mockapi is called
+"start-mockapi": "json-server --watch src/api/db.json --port 3001"
+
+//add start-mockapi to start script so that it starts new data each time it starts
+
+// point the app to the mock apiin development, otherwise t points to the real api in production
+create src/api/baseUrl.js
+
+export default function getBaseUrl (){
+    const inDevelopment = windows.location.hostname === 'localhost';
+    return inDevelopment ? 'http://localhost:3001/' : '/'; //let's assume '/' is the real api, it might be https://shrouded-refuge-41310.herokuapp.com
+  }
+
+  //adjust the fetch api in UserApi.js
+{
+    import "whatwg-fetch";
+    import getBaseUrl from "./baseUrl/";
+
+    const baseUrl = getBaseUrl();
+
+    export function getUsers() {
+        return get('users');
+    }
+
+    function get(url) {
+        return fetch(baseUrl + url).then(onSuccess, onError);
+    }
+
+    function onSuccess(response) {
+        return response.json();
+    }
+
+    function onError(error) {
+        console.log(error); //eslint-disable-line no-console
+    }
+}
+
 
 
 
