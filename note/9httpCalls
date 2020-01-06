@@ -1,0 +1,146 @@
+/**********
+AGENDA
+*********/
+Making HTTP Calls
+Mocking HTTP Calls
+ Why mock?
+ Mocking Approaches
+ Generate mock data and mock API
+
+ /**********
+HTTP Call Approaches
+*********/
+{
+    - for node and Browser
+    isomorphic-fetch
+    xhr
+    SuperAgent
+    Axios
+
+    - for browser
+    XMLHttpRequest
+    jQuery
+    Fetch
+
+    - for node
+    http (built in node)
+    request
+
+    -with XMLHttpRequest
+    let http = new XMLHttpRequest();http.open("POST", 'http://your-api.com/user', true);http.setRequestHeader('Content-type', 'text/html; charset=UTF-8');
+    http.onreadystatechange= function() {
+    if (http.readyState== 4) {
+    if (http.status== 200) {
+    onSuccess(JSON.parse(http.responseText));
+    } else{
+    onError(http);
+    }
+    }
+    };
+    http.onerror= onError;
+    http.send(text);
+
+    -with fetch:
+    varrequest = new Request('http://your-api.com/user', {
+    method: 'GET',
+    mode: 'cors',
+    headers: new Headers({
+    'Content-Type': 'text/html; charset=UTF-8'})
+    });
+    fetch(request).then(onSuccess, onError);
+
+    -with axios
+    axios({
+    url: ‘http://your-api.com/user',
+    method: 'post',
+    headers: {
+    'Content-type': 'text/html; charset=UTF-8'},
+    data: text
+    }).then(onSuccess, onError)
+}
+
+/************
+Key: Centralize API Calls
+*************/
+Why Centralize API Calls?
+Configure all calls
+Handle preloaderlogic
+Handle errors
+Single seam for mocking
+
+/************
+DEMO: Fetch.
+*************/
+AGENDA
+Set up fetch
+Centralizing HTTP calls
+
+// since we dont have an api/ database
+// we set up express to simply serve the data
+
+// In buildScripts/srcServer.js
+{
+    app.get('/users', function (req, res){
+        res.json([
+        {"id": 1, "firstName": "Matthew", "lastName":"oye", "email": "ml@gmail.com"},
+        {"id": 2, "firstName": "Cornel", "lastName":"okon", "email": "co@gmail.com"},
+        {"id": 3, "firstName": "Osita", "lastName":"Irene", "email": "oi@gmail.com"}
+        ]);
+    });
+}
+
+//create src/api/userAPI.js
+//to set up api to use fetch.
+{
+    import "whatwg-fetch"; //polyfill
+
+    export function getUsers (){
+    return get('users');
+    }
+
+    // we can use PUT, DELETE, PATCH, etc
+    function get(url){
+        return fetch(baseUrl + url).then(onSuccess, onError);
+    }
+
+    // central place to handle all on-success calls
+    function onSuccess(response){
+    return response.json();
+    }
+
+    // central place to handle all on-error calls
+    function onError(error){
+    console.log(error); //eslint-disable-line no-console
+    }
+}
+
+//use index.js to populate the index.html page
+
+{
+    import {getUsers} from "./api/userApi";
+
+    //Populate table of users via API calls.
+    getUsers().then (result => {
+
+        let usersBody = "";
+
+        result.forEach(user =>{
+            usersBody +=
+            `<tr>
+                <td> <a href="#" data-id="${user.id}" class="deleteUser">Delete</a></td>
+                <td>${user.id}</td>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.email}</td>
+            </tr>`
+        });
+        global.document.getElementById('users').innerHTML = usersBody;
+    });
+}
+
+
+
+
+
+
+
