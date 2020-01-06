@@ -139,6 +139,66 @@ Centralizing HTTP calls
 }
 
 
+/**********
+Why send a polyfillto everyone?
+************/
+
+Only Send Polyfillto Those Who Need It
+<script src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
+
+/**********
+Mocking HTTP Calls
+ Why mock?
+************/
+Unit Testing
+Instant response - expenseive to make a live call
+Keep working when services are down
+Rapid prototyping
+Avoid inter-team bottlenecks
+Work offline
+
+/**********
+How to Mock HTTP
+*********/
+Nock
+Static JSON
+Create development webserver
+    - api-mock
+    - JSON server
+    - JSON Schema faker
+    - Browsersync
+    - Express, etc.
+
+/**********
+Our Plan for Mocking HTTP
+*********/
+1.
+Declare our schema:
+- JSON Schema Faker
+
+2.
+Generate Random Data:
+- faker.js
+- chance.js
+- randexp.js
+
+3.
+Serve Data via API
+- JSON Server
+
+See github.com/Marak/faker.js/wiki
+marak.github.io/faker.js/index.html
+
+/**********
+DEMO: Creating a Mock API Data Schema.
+*********/
+Mock HTTP
+    -JSON Schema Faker
+        •faker, chance, regexp
+    -JSON Server
+
+//create buildScripts/mockDataSchema.js
+
 
 
 
