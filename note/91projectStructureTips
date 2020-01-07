@@ -1,0 +1,49 @@
+/***************
+Why Include a Demo App?
+***************/
+Examples of:
+    - Directory structure and file naming
+    - Framework usage
+    - Testing
+    - Mock API
+    - Automated deployment
+Codifies decisions
+Interactive example of working with starter
+
+/***********
+Project Structure Tips
+***********/
+1. Put JS in a .js file
+{
+    Don't do this “I’ll just slap this JS in a script tag.”
+    How do I…
+    Test this?
+    Lint this?
+    Reuse this?
+    Transpilethis?
+    Import explicit dependencies?
+
+    YOU CAN’T.
+}
+
+2. Consider organizing by feature
+{
+    - Organize by File Type
+    /components
+    /data
+    /models
+    /views
+
+    - Organize by Feature
+    /authors
+    /courses
+}
+
+3. Extract logic into “POJOs”
+
+{
+    Plain Old JavaScript Objects
+    Pure logic.
+    No framework-specific code.
+}
+
