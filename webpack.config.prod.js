@@ -6,16 +6,23 @@ export default {
   debug: true,
   devtool: 'source-map', // recommeded for productiom, this specifes how source would be generated; so we can original code even after minificatuion
   noInfo: false,
-  entry: [
-    path.resolve(__dirname, 'src/index')
-  ],
+  entry: {
+    vendor: path.resolve(__dirname, 'src/vendor'),
+    main: path.resolve(__dirname, 'src/index')
+  },
   target: 'web',
   output: {
     path: path.resolve(__dirname, 'dist'), // where to write the output.
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: '[name].[chunkhash].js'
   },
   plugins: [
+    //Use CommonChunckPlugin to create a separate bundle
+    //of vendor libraries so that they are cached separately
+    new webpack.optimize.CommonsChunkPlugin ({
+      name: 'vendor' //value of name is the sme as the entry point
+    }),
+
     //create html file that includes reference to bundled JS
     new HtmlWebpackPlugin ({
       template: 'src/index.html',
