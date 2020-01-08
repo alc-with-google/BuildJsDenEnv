@@ -201,4 +201,27 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
       inject: true, //so we delete the script tag in html in dev since this plugin would inject the script
     }),
 
+/**************
+DEMO: Add minification to Dynamic HTML During Build
+**************/
 
+// the plugin in webpack.config.prod.js improves
+
+//create html file that includes reference to bundled JS
+    new HtmlWebpackPlugin ({
+      template: 'src/index.html',
+      minify: { //for minification of the dynamic generated html file
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttribute: true,
+        keepClosingSlash: true,
+        minifyJs: true,
+        minifyCSS: true,
+        minifyURLs: true
+      },
+      inject: true, //so we delete the script tag in html since the scrip would be injected
+      trackJsToken: trackJsToken()
+    }),

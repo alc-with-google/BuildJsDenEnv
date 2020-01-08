@@ -16,9 +16,22 @@ export default {
     filename: 'bundle.js'
   },
   plugins: [
+    //create html file that includes reference to bundled JS
     new HtmlWebpackPlugin ({
-      template: 'src/index.html', //reference to our html in development
-      inject: true, //so we delete the script tag in html in dev since this plugin would inject the script
+      template: 'src/index.html',
+      minify: { //for minification of the dynamic generated html file
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttribute: true,
+        keepClosingSlash: true,
+        minifyJs: true,
+        minifyCSS: true,
+        minifyURLs: true
+      },
+      inject: true, //so we delete the script tag in html since the scrip would be injected
     }),
 
     //Eliminate duplicate packages when generating bundle
