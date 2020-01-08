@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from "webpack";
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   debug: true,
@@ -15,6 +16,11 @@ export default {
     filename: 'bundle.js'
   },
   plugins: [
+    new HtmlWebpackPlugin ({
+      template: 'src/index.html', //reference to our html in development
+      inject: true, //so we delete the script tag in html in dev since this plugin would inject the script
+    }),
+
     //Eliminate duplicate packages when generating bundle
     new webpack.optimize.DedupePlugin(),
 

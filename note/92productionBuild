@@ -170,3 +170,35 @@ npm scripts to automate the production build scripts.
   "build": "babel-node buildScripts/build.js",
   "postbuild": "babel-node buildScripts/distServer.js",
 }
+
+/**************
+Dynamic HTML During Build
+**************/
+Why Manipulate HTML for Production?
+Reference bundles automatically
+Handle dynamic bundle names
+Inject production only resources
+Minify
+
+Referencing Bundled Assets in HTML
+Hard code
+Manipulate via Node: add some other code to production
+html-webpack-plugin: : add some other code to production, cache busting and other stuffs
+
+/**************
+DEMO: Dynamic HTML During Build
+**************/
+// html-webpack-plugin
+
+//in both webpack.config.prod.js and webpack.config.dev.js
+
+// add the import
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+// add the plugin
+//create html file that includes reference to bundled JS
+    new HtmlWebpackPlugin ({
+      template: 'src/index.html', //reference to our html in development
+      inject: true, //so we delete the script tag in html in dev since this plugin would inject the script
+    }),
+
+
