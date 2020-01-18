@@ -272,5 +272,51 @@ new webpack.optimize.CommonsChunkPlugin ({
 filename: '[name].[chunkhash].js'
 
 
+/**************
+Error Logging
+**************/
+
+/*** Options ***/
+{
+  TrackJS
+  Sentry
+  New Relic
+  Raygun
+}
+
+/*** JS Error Logging: What to Look For ***/
+{
+    Error Metadata
+      -  Browser
+      -  Stack trace
+      -  Previous actions
+      -  Custom API for enhanced tracking
+  Notifications & integrations
+  Analytics and filtering
+  Pricing
+}
+
+paste the necessary code in the html.
+run necessary code so that it runs only n production.
+
+{
+  define pp in the htmlwebpackplugin to make it avaliable in index.html
+  using htmlwebpackplugin.options.varName
+  so we can have:
+  trackJSToken: #code
+}
+{
+  <% if (htmlWebpackPlugin.options.trackJsToken){ %>
+  <!-- BEGIN TRACK -->
+        <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+        <script>
+        window.TrackJS && TrackJS.install({
+            token: '<%=htmlWebpackPlugin.options.trackJsToken%>'
+            // for more configuration options, see https://docs.trackjs.com
+        });
+        </script>
+        <!-- END TRACK -->
+  <% } %>
+}
 
 
