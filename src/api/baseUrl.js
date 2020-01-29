@@ -1,5 +1,5 @@
 export default function getBaseUrl (){
-  return getQueryStringParameterByName('useMockApi') ? 'http://localhost:3001/' : '/'; // '/' can be a hosted real api app https://shrouded-refuge-41310.herokuapp.com
+  return getQueryStringParameterByName('useMockApi') ? 'http://localhost:3001/' : 'https://whispering-springs-68474.herokuapp.com/'; // '/' can be a hosted real api app https://shrouded-refuge-41310.herokuapp.com
 }
 
 function getQueryStringParameterByName(name, url) {
