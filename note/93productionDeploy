@@ -72,3 +72,40 @@ in distServer.js so we hit our heroku app in production
 >npm run deploy (hit enter)
 
 //available at free-airplane.surge.sh
+
+
+/*** Handling starter kit updates ***/
+Update Approaches
+-Yeoman
+-GitHub
+-npm
+
+Updating Existing Projects with Yeoman
+1.
+Commit
+2.
+Scaffold over the existing project
+3.
+Resolve conflicts manually
+
+Updating Existing Projects with GitHub
+1.
+Host on GitHub
+2.
+Fork starter kit for new project
+3.
+Pull changes from master
+
+Updating Existing Projects with npm
+1.
+Encapsulate kit in npm package
+2.
+Update npm package to receive latest
+
+
+
+/*** Inspiration ***/
+andrewhfarmer.com/starter-project/
+github.com/gianarb/awesome-angularjs
+
+
