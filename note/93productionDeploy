@@ -1,0 +1,50 @@
+/*************
+AGENDA
+************/
+{
+    Separating the UI from the API
+    Hosting providers
+    Automated deployment
+    Handling starter kit updates
+    Inspiration
+    Challenge
+}
+
+/*** Separating the UI from the API ***/
+{
+    1. Simple, low-risk, UI only deploys
+    2. Separates concerns
+        -   Separate teams
+        -   Less to understand for new developers
+        -   Scale back-end separately
+    3. Cheap UI hosting
+    4. Serve UI via a content delivery network
+    5. Use the API tech you like
+}
+
+/*** Hosting Providers ***/
+{
+    Amamzon Web services
+    Microsoft Azure
+    Heroku-> for the API
+    Firebase
+    Google Cloud Platform
+    //for static files
+    Surge -> Static Files
+    Github
+    Netlify
+}
+
+/*** Automated API deploy to Heroku ***/
+The UI is separated from the API
+set up the API on jsDevEnvHeroku folder.
+
+Use the heroku set up process for node.js.
+
+/*** Deploy the app ***/
+> heroku create
+> heroku git:remote -a whispering-springs-68474 (where whispering-springs-68474 is the name of the app)
+> git push heroku master
+
+
+
